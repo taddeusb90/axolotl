@@ -16,7 +16,7 @@ flash-attn==2.5.5
 sentencepiece
 wandb
 einops
-xformers==0.0.22
+xformers==0.0.23
 optimum==1.16.2
 hf_transfer
 colorama

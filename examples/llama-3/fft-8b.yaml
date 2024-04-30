@@ -1,4 +1,4 @@
-base_model: meta-llama/Meta-Llama-3-8B
+base_model: meta-llama/Meta-Llama-3-8B-Instruct
 model_type: LlamaForCausalLM
 tokenizer_type: AutoTokenizer
 
@@ -7,21 +7,21 @@ load_in_4bit: false
 strict: false
 
 datasets:
-  - path: tatsu-lab/alpaca
+  - path: sujet-ai/Sujet-Finance-Instruct-177k
     type: alpaca
 dataset_prepared_path: last_run_prepared
 val_set_size: 0.05
 output_dir: ./out
 
-sequence_len: 8192
+sequence_len: 1048576
 sample_packing: true
 pad_to_sequence_len: true
 
-wandb_project:
-wandb_entity:
-wandb_watch:
-wandb_name:
-wandb_log_model:
+wandb_project: finbro-llama-3-8b-1m-POSE
+wandb_entity: sigmance
+wandb_watch: 
+wandb_name: finbro-llama-3-8b-1m-POSE
+wandb_log_model: 
 
 gradient_accumulation_steps: 8
 micro_batch_size: 1
@@ -29,6 +29,7 @@ num_epochs: 1
 optimizer: paged_adamw_8bit
 lr_scheduler: cosine
 learning_rate: 2e-5
+use_pose: true
 
 train_on_inputs: false
 group_by_length: false
