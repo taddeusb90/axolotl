@@ -7,10 +7,10 @@ load_in_4bit: true
 strict: false
 
 datasets:
-  - path: gbharti/finance-alpaca
+  - path: taddeusb90/finbro-v0.1.0
     type: alpaca
 dataset_prepared_path: last_run_prepared
-val_set_size: 0.05
+val_set_size: 0.01
 output_dir: ./out/finbro-v0.1.0-llama-3-8B-instruct-4bit-1m-POSE
 
 adapter: qlora
@@ -36,6 +36,12 @@ wandb_log_model: "true"
 use_pose: true
 pose_max_context_len: 1048576
 
+# lora_on_cpu: 
+overrides_of_model_config:
+  rope_theta: 500000.0
+  max_position_embeddings: 1048576
+  rope_scaling: 
+
 gradient_accumulation_steps: 4
 micro_batch_size: 1
 num_epochs: 4
@@ -49,21 +55,23 @@ bf16: auto
 fp16:
 tf32: false
 
+# gpu_memory_limit: 46GiB
+# lora_on_cpu: true
+
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: true
-early_stopping_patience: 10
-resume_from_checkpoint: 
-auto_resume_from_checkpoints: true
+early_stopping_patience: 50
+resume_from_checkpoint: ./out/finbro-v0.1.0-llama-3-8B-instruct-4bit-1m-POSE/checkpoint-4800
 local_rank:
 logging_steps: 1
 xformers_attention:
 flash_attention: true
 
 
-warmup_steps: 10
-save_steps: 10
-eval_steps: 10
+warmup_steps: 1
+save_steps: 100
+eval_steps: 100
 # evals_per_epoch: 4
 eval_table_size:
 # saves_per_epoch: 1
