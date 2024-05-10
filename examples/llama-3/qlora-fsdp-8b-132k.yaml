@@ -17,7 +17,7 @@ adapter: qlora
 lora_model_dir:
 
 sequence_len: 8192
-sample_packing: false
+sample_packing: true
 pad_to_sequence_len: true
 
 lora_r: 8
@@ -63,7 +63,8 @@ gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: true
 early_stopping_patience: 50
-resume_from_checkpoint: ./out/finbro-v0.1.0-llama-3-8B-instruct-131k/checkpoint-300
+resume_from_checkpoint: 
+# ./out/finbro-v0.1.0-llama-3-8B-instruct-4bit-1m-POSE/checkpoint-4800
 local_rank:
 logging_steps: 1
 xformers_attention:
