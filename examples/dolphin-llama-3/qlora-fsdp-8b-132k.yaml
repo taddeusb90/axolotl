@@ -1,4 +1,4 @@
-base_model: meta-llama/Meta-Llama-3-8B-Instruct
+base_model: cognitivecomputations/dolphin-2.9-llama3-8b
 model_type: LlamaForCausalLM
 tokenizer_type: AutoTokenizer  # PreTrainedTokenizerFast
 
@@ -11,7 +11,7 @@ datasets:
     type: alpaca
 dataset_prepared_path: last_run_prepared
 val_set_size: 0.01
-output_dir: ./out/finbro-v0.1.0-llama-3-8B-instruct-131k
+output_dir: ./out/finbro-v0.1.0-dolphin-2.9-llama-3-8B-instruct-131k
 
 adapter: qlora
 lora_model_dir:
@@ -27,10 +27,10 @@ lora_target_modules:
 lora_target_linear: true
 lora_fan_in_fan_out:
 
-wandb_project: finbro-v0.1.0-llama-3-8B-instruct-131k
+wandb_project: finbro-v0.1.0-dolphin-2.9-llama-3-8B-instruct
 wandb_entity: sigmance
 wandb_watch: "true"
-wandb_name: finbro-v0.1.0-llama-3-8B-instruct-131k
+wandb_name: finbro-v0.1.0-dolphin-2.9-llama-3-8B-instruct-131k
 wandb_log_model: "true"
 
 use_pose: true
@@ -59,7 +59,8 @@ gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: true
 early_stopping_patience: 50
-resume_from_checkpoint: ./out/finbro-v0.1.0-llama-3-8B-instruct-131k/checkpoint-300
+resume_from_checkpoint: 
+# ./out/finbro-v0.1.0-llama-3-8B-instruct-131k/checkpoint-3600
 local_rank:
 logging_steps: 1
 xformers_attention:

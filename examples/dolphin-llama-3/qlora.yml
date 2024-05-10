@@ -1,0 +1,69 @@
+base_model: meta-llama/Meta-Llama-3-8B-Instruct
+model_type: AutoModelForCausalLM
+tokenizer_type: AutoTokenizer
+
+load_in_8bit: false
+load_in_4bit: true
+strict: false
+
+datasets:
+  - path: gbharti/finance-alpaca
+    type: alpaca
+dataset_prepared_path:
+val_set_size: 0
+output_dir: ./qlora-out/finbro-v0.1.0-llama-3-instruct-4bit-1m-POSE
+
+adapter: qlora
+lora_model_dir:
+
+sequence_len: 8192
+sample_packing: true
+pad_to_sequence_len: true
+
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+lora_target_linear: true
+lora_fan_in_fan_out:
+
+wandb_project: finbro-v0.1.0-llama-3-instruct-4bit-1m-POSE
+wandb_entity: sigmance
+wandb_watch: "true"
+wandb_name: finbro-v0.1.0-llama-3-instruct-4bit-1m-POSE
+wandb_log_model: "true"
+use_pose: true
+pose_max_context_len: 1048576
+
+gradient_accumulation_steps: 4
+micro_batch_size: 2
+num_epochs: 4
+optimizer: paged_adamw_32bit
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+train_on_inputs: false
+group_by_length: false
+bf16: auto
+fp16:
+tf32: false
+
+gradient_checkpointing: true
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+logging_steps: 1
+xformers_attention:
+flash_attention: true
+
+warmup_steps: 10
+evals_per_epoch: 4
+eval_table_size:
+saves_per_epoch: 1
+debug:
+deepspeed:
+weight_decay: 0.0
+fsdp:
+fsdp_config:
+special_tokens:
+  pad_token: "<|end_of_text|>"

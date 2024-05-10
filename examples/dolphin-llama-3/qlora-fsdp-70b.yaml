@@ -1,4 +1,4 @@
-base_model: meta-llama/Meta-Llama-3-8B-Instruct
+base_model: meta-llama/Meta-Llama-3-70B-Instruct
 model_type: LlamaForCausalLM
 tokenizer_type: AutoTokenizer  # PreTrainedTokenizerFast
 
@@ -7,11 +7,11 @@ load_in_4bit: true
 strict: false
 
 datasets:
-  - path: taddeusb90/finbro-v0.1.0
+  - path: gbharti/finance-alpaca
     type: alpaca
 dataset_prepared_path: last_run_prepared
-val_set_size: 0.01
-output_dir: ./out/finbro-v0.1.0-llama-3-8B-instruct-131k
+val_set_size: 0.05
+output_dir: ./out/finbro-v0.1.0-llama-3-70B-instruct-4bit-1m-POSE
 
 adapter: qlora
 lora_model_dir:
@@ -27,27 +27,21 @@ lora_target_modules:
 lora_target_linear: true
 lora_fan_in_fan_out:
 
-wandb_project: finbro-v0.1.0-llama-3-8B-instruct-131k
+wandb_project: finbro-v0.1.0-llama-3-70B-instruct-4bit-1m-POSE
 wandb_entity: sigmance
 wandb_watch: "true"
-wandb_name: finbro-v0.1.0-llama-3-8B-instruct-131k
+wandb_name: finbro-v0.1.0-llama-3-70B-instruct-4bit-1m-POSE
 wandb_log_model: "true"
 
 use_pose: true
-pose_max_context_len: 131072
-
-# lora_on_cpu: 
-overrides_of_model_config:
-  rope_theta: 500000.0
-  max_position_embeddings: 131072
-  rope_scaling: 
+pose_max_context_len: 1048576
 
 gradient_accumulation_steps: 4
 micro_batch_size: 1
 num_epochs: 4
 optimizer: adamw_torch
 lr_scheduler: cosine
-learning_rate: 0.0002
+learning_rate: 0.0001
 
 train_on_inputs: false
 group_by_length: false
@@ -58,20 +52,17 @@ tf32: false
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: true
-early_stopping_patience: 50
-resume_from_checkpoint: ./out/finbro-v0.1.0-llama-3-8B-instruct-131k/checkpoint-300
+early_stopping_patience:
+resume_from_checkpoint:
 local_rank:
 logging_steps: 1
 xformers_attention:
 flash_attention: true
 
-
-warmup_steps: 1
-save_steps: 100
-eval_steps: 100
-# evals_per_epoch: 4
+warmup_steps: 10
+evals_per_epoch: 4
 eval_table_size:
-# saves_per_epoch: 1
+saves_per_epoch: 1
 debug:
 deepspeed:
 weight_decay: 0.0

@@ -55,6 +55,10 @@ bf16: auto
 fp16:
 tf32: false
 
+# gpu_memory_limit: 40GiB
+# lora_on_cpu: true
+# max_memory: 80GiB
+
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: true

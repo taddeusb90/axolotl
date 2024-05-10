@@ -16,8 +16,8 @@ output_dir: ./out/finbro-v0.1.0-llama-3-8B-instruct-1m
 adapter: qlora
 lora_model_dir:
 
-sequence_len: 2048
-sample_packing: true
+sequence_len: 8192
+sample_packing: false
 pad_to_sequence_len: true
 
 lora_r: 8
@@ -27,7 +27,7 @@ lora_target_modules:
 lora_target_linear: true
 lora_fan_in_fan_out:
 
-wandb_project: finbro-v0.1.0-llama-3-8B-instruct-1m
+wandb_project: finbro-v0.1.0-llama-3-8B-instruct-131k
 wandb_entity: sigmance
 wandb_watch: "true"
 wandb_name: finbro-v0.1.0-llama-3-8B-instruct-1m
@@ -55,16 +55,11 @@ bf16: auto
 fp16:
 tf32: false
 
-# gpu_memory_limit: 40GiB
-# # lora_on_cpu: true
-
-
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: true
 early_stopping_patience: 50
-resume_from_checkpoint: 
-# ./out/finbro-v0.1.0-llama-3-8B-instruct-4bit-1m-POSE/checkpoint-4700
+resume_from_checkpoint: ./out/finbro-v0.1.0-llama-3-8B-instruct-131k/checkpoint-3500
 local_rank:
 logging_steps: 1
 xformers_attention:
@@ -79,7 +74,6 @@ eval_table_size:
 # saves_per_epoch: 1
 debug:
 deepspeed: 
-# deepspeed_configs/zero2.json
 weight_decay: 0.0
 fsdp:
   - full_shard
